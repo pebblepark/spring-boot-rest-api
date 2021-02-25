@@ -1,4 +1,4 @@
-package com.example.restapi;
+package com.example.restapi.controller.v1;
 
 import com.example.restapi.entity.User;
 import com.example.restapi.repo.UserJpaRepo;
