@@ -1,5 +1,6 @@
 package com.example.restapi.advice;
 
+import com.example.restapi.advice.exception.CUserNotFoundException;
 import com.example.restapi.model.response.CommonResult;
 import com.example.restapi.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,16 @@ public class ExceptionAdvice {
 
     private final ResponseService responseService;
 
+    /*
     @ExceptionHandler(Exception.class)  // Exception 이 발생하면 해당 Handler 로 처리하겠다고 명시하는 annotation
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)   // 해당 Exception 이 발생하면 Response 에 출력되는 HttpStatus Code 가 500 이 되도록 설정
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
         return responseService.getFailResult(); // CommonResult 의 실패 결과를 json 형태로 출력하도록 설정
-    }
+    }*/
 
+    @ExceptionHandler(CUserNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
+        return responseService.getFailResult(500, "User Not Found");
+    }
 }

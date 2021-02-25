@@ -1,5 +1,6 @@
 package com.example.restapi.controller.v1;
 
+import com.example.restapi.advice.exception.CUserNotFoundException;
 import com.example.restapi.entity.User;
 import com.example.restapi.model.response.CommonResult;
 import com.example.restapi.model.response.ListResult;
@@ -31,7 +32,7 @@ public class UserController {
     @ApiOperation(value = "회원 단건 조회", notes = "userId로 회원을 조회한다")
     @GetMapping(value = "/user/{msrl}")
     public SingleResult<User> findUser(@ApiParam(value = "회원번호", required = true) @PathVariable long msrl) throws Exception {
-        return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(Exception::new));
+        return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(CUserNotFoundException::new));
     }
 
     @ApiOperation(value = "회원 입력", notes = "회원을 입력한다.")

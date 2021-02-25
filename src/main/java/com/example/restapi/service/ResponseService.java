@@ -62,6 +62,14 @@ public class ResponseService {
         return result;
     }
 
+    public CommonResult getFailResult(int code, String msg) {
+        CommonResult result = new CommonResult();
+        result.setSuccess(false);
+        result.setCode(code);
+        result.setMessage(msg);
+        return result;
+    }
+
     // 결과 모델에 api 요청 성공 데이터 세팅
     public void setSuccessResult(CommonResult result) {
         result.setSuccess(true);
