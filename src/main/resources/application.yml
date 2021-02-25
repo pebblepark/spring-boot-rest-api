@@ -11,3 +11,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties.hibernate.hbm2ddl.auto: update
     showSql: true
+
+#   production 에서는 none
+#   properties.hibernate.hbm2ddl.auto: none
