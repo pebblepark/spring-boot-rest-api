@@ -1,10 +1,14 @@
-POST http://localhost:8080/v1/user
-Content-Type: application/json
+### create
+POST http://localhost:8080/v1/user?uid=yumi@naver.com&name=유미
 
-{
-  "uid" : "yumi@naver.com",
-  "name" : "유미"
-}
+### select all
+GET http://localhost:8080/v1/users
 
-###
-GET http://localhost:8080/v1/user
+### select
+GET http://localhost:8080/v1/user/1
+
+### update
+PUT http://localhost:8080/v1/user?msrl=1&uid=yura@naver.com&name=유라
+
+### delete
+DELETE http://localhost:8080/v1/user?msrl=1
