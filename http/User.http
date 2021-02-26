@@ -5,7 +5,7 @@ POST http://localhost:8080/v1/user?uid=yumi@naver.com&name=유미
 GET http://localhost:8080/v1/users
 
 ### select
-GET http://localhost:8080/v1/user/1
+GET http://localhost:8080/v1/user/1?lang=en
 
 ### update
 PUT http://localhost:8080/v1/user?msrl=1&uid=yura@naver.com&name=유라
