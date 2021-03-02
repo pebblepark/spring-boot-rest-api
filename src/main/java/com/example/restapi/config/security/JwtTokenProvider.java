@@ -23,7 +23,7 @@ import java.util.List;
 @Component
 public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
-    @Value("spring.jwt.secret")
+    @Value("spring.jwt.secret") // application.yml 에서 값 가져오기
     private String secretKey;
 
     private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
@@ -74,3 +74,13 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         }
     }
 }
+
+/*
+* Jwt 토큰 생성 및 유효성 검증을 하는 컴포넌트
+* Jwt 는 여러 가지 암호화 알고리즘을 제공하며 알고리즘(SignatureAlgorithm.XXXXX)과 비밀키(secretKey)를 가지고 토큰을 생성함
+* 이때 claim 정보에는 토큰에 부가적으로 실어 보낼 정보를 세팅 가능함
+* claim 정보에 회원을 구분할 수 있는 값을 세팅하였다가 토큰이 들어오면 해당 값으로 회원을 구분하여 리소스를 제공
+* Jwt 토큰에는 expire 시간(유효시간)을 세팅 가능 ->토큰 발급 후 일정 시간 이후에는 토큰을 만료시키는 데 사용
+* resolveToken 메서드는 Http request header 에 세팅된 토큰 값을 가져와 유효성을 체크
+* 제한된 리소스를 요청할 때 Http header 에 토큰을 세팅하여 호출하면 유효성을 검증하여 사용자 인증 가능
+* */
