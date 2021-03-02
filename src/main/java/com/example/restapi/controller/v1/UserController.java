@@ -11,8 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+@Log4j2
 @Api(tags = {"1. User"})    // UserController 를 대표하는 최상단 타이틀
 @RequiredArgsConstructor
 @RestController
@@ -31,7 +33,7 @@ public class UserController {
 
     @ApiOperation(value = "회원 단건 조회", notes = "userId로 회원을 조회한다")
     @GetMapping(value = "/user/{msrl}")
-    public SingleResult<User> findUser(@ApiParam(value = "회원번호", required = true) @PathVariable long msrl) throws Exception {
+    public SingleResult<User> findUser(@ApiParam(value = "회원번호", required = true) @PathVariable long msrl, @ApiParam(value = "언어정보", defaultValue = "ko") @RequestParam(required = false) String lang) throws Exception {
         return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(CUserNotFoundException::new));
     }
 

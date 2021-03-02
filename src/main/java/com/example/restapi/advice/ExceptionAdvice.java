@@ -1,9 +1,12 @@
 package com.example.restapi.advice;
 
+import com.example.restapi.advice.exception.CEmailSigninFailedException;
 import com.example.restapi.advice.exception.CUserNotFoundException;
 import com.example.restapi.model.response.CommonResult;
 import com.example.restapi.service.ResponseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,17 +25,35 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionAdvice {
 
     private final ResponseService responseService;
+    private final MessageSource messageSource;
 
-    /*
-    @ExceptionHandler(Exception.class)  // Exception 이 발생하면 해당 Handler 로 처리하겠다고 명시하는 annotation
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)   // 해당 Exception 이 발생하면 Response 에 출력되는 HttpStatus Code 가 500 이 되도록 설정
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
-        return responseService.getFailResult(); // CommonResult 의 실패 결과를 json 형태로 출력하도록 설정
-    }*/
+        // 예외 처리의 메시지를 MessageSource 에서 가져오도록 수정
+        return responseService.getFailResult(Integer.valueOf(getMessage("unKnown.code")), getMessage("unKnown.msg"));
+    }
 
     @ExceptionHandler(CUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
-        return responseService.getFailResult(500, "User Not Found");
+        return responseService.getFailResult(Integer.valueOf(getMessage("userNotFound.code")), getMessage("userNotFound.msg"));
     }
+
+    @ExceptionHandler(CEmailSigninFailedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult emailSigninFailed(HttpServletRequest request, CEmailSigninFailedException e) {
+        return responseService.getFailResult(Integer.valueOf(getMessage("emailSigninFailed.code")), getMessage("emailSigninFailed.msg"));
+    }
+
+    // code 정보에 해당하는 메시지를 조회
+    private String getMessage(String code) {
+        return getMessage(code, null);
+    }
+
+    // code 정보, 추가 argument 로 현재 locale 에 맞는 메시지를 조회합니다.
+    private String getMessage(String code, Object[] args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
+
 }

@@ -54,14 +54,6 @@ public class ResponseService {
     }
 
     // 실패 결과 처리
-    public CommonResult getFailResult() {
-        CommonResult result = new CommonResult();
-        result.setSuccess(false);
-        result.setCode(CommonResponse.FAIL.getCode());
-        result.setMessage(CommonResponse.FAIL.getMsg());
-        return result;
-    }
-
     public CommonResult getFailResult(int code, String msg) {
         CommonResult result = new CommonResult();
         result.setSuccess(false);
