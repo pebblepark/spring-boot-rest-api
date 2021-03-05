@@ -2,6 +2,7 @@ package com.example.restapi.advice;
 
 import com.example.restapi.advice.exception.CEmailSigninFailedException;
 import com.example.restapi.advice.exception.CUserNotFoundException;
+import com.example.restapi.advice.exception.CustomAuthenticationException;
 import com.example.restapi.model.response.CommonResult;
 import com.example.restapi.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,11 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult emailSigninFailed(HttpServletRequest request, CEmailSigninFailedException e) {
         return responseService.getFailResult(Integer.valueOf(getMessage("emailSigninFailed.code")), getMessage("emailSigninFailed.msg"));
+    }
+
+    @ExceptionHandler(CustomAuthenticationException.class)
+    protected CommonResult authenticationException(HttpServletRequest request, CustomAuthenticationException e) {
+        return responseService.getFailResult(Integer.valueOf(getMessage("entryPointException.code")), getMessage("entryPointException.msg"));
     }
 
     // code 정보에 해당하는 메시지를 조회
