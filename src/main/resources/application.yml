@@ -1,19 +1,6 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: update
-    showSql: true
-#   production 에서는 none
-#   properties.hibernate.hbm2ddl.auto: none
-
+  profiles:
+    active: local # 디폴트 환경
   messages:
     basename: i18n/exception
     encoding: UTF-8
