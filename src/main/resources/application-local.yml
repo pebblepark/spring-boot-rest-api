@@ -23,3 +23,5 @@ spring:
     generate-ddl: true
   #   production 에서는 none
   #   properties.hibernate.hbm2ddl.auto: none
+  url:
+    base: http://localhost:8080
