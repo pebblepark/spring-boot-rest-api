@@ -1,5 +1,6 @@
 package com.example.restapi.controller.common;
 
+import com.example.restapi.model.social.RetKakaoAuth;
 import com.example.restapi.service.user.KakaoService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class SocialController {
 
     private final Environment env;
+    private final RestTemplate restTemplate;
+    private final Gson gson;
+    private final KakaoService kakaoService;
 
     @Value("${spring.url.base}")
     private String baseUrl;
@@ -38,6 +42,14 @@ public class SocialController {
 
         mav.addObject("loginUrl", loginUrl);
         mav.setViewName("social/login");
+        return mav;
+    }
+
+    @GetMapping("/kakao")
+    public ModelAndView redirectKakao(ModelAndView mav, @RequestParam String code) {
+        RetKakaoAuth retKakaoAuth = kakaoService.getKakaoTokenInfo(code);
+        mav.addObject("authInfo", retKakaoAuth);
+        mav.setViewName("social/redirectKakao");
         return mav;
     }
 }

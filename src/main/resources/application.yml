@@ -12,5 +12,5 @@ spring:
       redirect: /social/login/kakao
       url:
         login: https://kauth.kakao.com/oauth/authorize
-        token: http://kauth.kakao.com/oauth/token
+        token: https://kauth.kakao.com/oauth/token
         profile: https://kapi.kakao.com/v2/user/me
